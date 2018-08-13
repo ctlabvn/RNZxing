@@ -1,5 +1,5 @@
 #import "ZxingView.h"
-#import "RCTConvert.h"
+#import <React/RCTConvert.h>
 #import <UIKit/UIKit.h>
 #import "ZXingObjC/ZXingObjC.h"
 
