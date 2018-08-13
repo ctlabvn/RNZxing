@@ -1,3 +1,39 @@
-import Zxing from './Zxing'
+import React, { Component } from 'react';
+import { requireNativeComponent, View } from 'react-native';
 
-export default Zxing
+type Format =
+  | 'AZTEC'
+  | 'CODABAR'
+  | 'CODE_39'
+  | 'CODE_93'
+  | 'CODE_128'
+  | 'DATA_MATRIX'
+  | 'EAN_8'
+  | 'EAN_13'
+  | 'ITF'
+  | 'MAXICODE'
+  | 'PDF_417'
+  | 'QR_CODE'
+  | 'RSS_14'
+  | 'RSS_EXPANDED'
+  | 'UPC_A'
+  | 'UPC_E'
+  | 'UPC_EAN_EXTENSION';
+
+type Props = {
+  width: number,
+  height: number,
+  foo: number,
+  text: string,
+  format: Format
+};
+
+class Zxing extends Component {
+  render() {
+    return <RNZxing {...this.props} />;
+  }
+}
+
+const RNZxing = requireNativeComponent('Zxing', Zxing);
+
+module.exports = Zxing;
