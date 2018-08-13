@@ -1,7 +1,7 @@
 #import "ZxingView.h"
 #import <React/RCTConvert.h>
 #import <UIKit/UIKit.h>
-#import "ZXingObjC/ZXingObjC.h"
+#import "ZXingObjC.h"
 
 @implementation ZxingView{
     UIImageView *_image;

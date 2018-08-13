@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* Zxing.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* Zxing.m */; };
 		CE2628991DFEBF4500D45E7C /* ZxingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2628981DFEBF4500D45E7C /* ZxingView.m */; };
-		CE2628A01DFEC76100D45E7C /* ZXingObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26289F1DFEC76100D45E7C /* ZXingObjC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +27,7 @@
 		134814201AA4EA6300B7C361 /* libZxing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZxing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BE3DEC1AC21097009241FE /* Zxing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zxing.h; sourceTree = "<group>"; };
 		13BE3DED1AC21097009241FE /* Zxing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Zxing.m; sourceTree = "<group>"; };
+		2431AF222121950C0042DC42 /* libZXingObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libZXingObjC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE2628971DFEBF0D00D45E7C /* ZxingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZxingView.h; sourceTree = "<group>"; };
 		CE2628981DFEBF4500D45E7C /* ZxingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZxingView.m; sourceTree = "<group>"; };
 		CE26289F1DFEC76100D45E7C /* ZXingObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZXingObjC.framework; path = Carthage/Build/iOS/ZXingObjC.framework; sourceTree = "<group>"; };
@@ -38,7 +38,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2628A01DFEC76100D45E7C /* ZXingObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +67,7 @@
 		CE26289A1DFEC04600D45E7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2431AF222121950C0042DC42 /* libZXingObjC.a */,
 				CE26289F1DFEC76100D45E7C /* ZXingObjC.framework */,
 			);
 			name = Frameworks;
