@@ -10,7 +10,7 @@
     
 }
 
-@synthesize text=_text,width=_width,height=_height;
+@synthesize text=_text,width=_width,height=_height,format=_format, cache=_cache;
 
 - (instancetype)init
 {
@@ -54,10 +54,15 @@
 
 -(void)setFormat: (NSString *)format
 {
+    _format = format;
     _barCodeFormat = [_supportedBarCodeFormats[format] intValue];
     NSLog(@"Using barcode %d", _barCodeFormat);
 }
 
+-(void)setCache:(bool)cache
+{
+    _cache = cache;
+}
 
 -(void)setWidth:(int)width
 {
@@ -80,27 +85,61 @@
     }
 }
 
+- (NSString *)generateFilePath:(NSString *)text withFormat:(NSString *)format
+                  withWidth:(int)width
+                     withHeight:(int)height
+{
+    NSData *plainData = [text dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *fileName = [NSString stringWithFormat:@"tmp/Zxing_%@_%@_%u_%u.png",
+                          [plainData base64EncodedStringWithOptions:kNilOptions], format,
+                          width, height];
+    
+    return [NSHomeDirectory() stringByAppendingPathComponent:fileName];
+}
+
+
+
+// put cache here as an option so that we can render faster, and can access cache path
 -(void)layoutSubviews
 {
     NSLog(@"In layoutSubviews");
     [super layoutSubviews];
-    NSError *zebraError = nil;
-    ZXEncodeHints *hints = [ZXEncodeHints hints];
-    hints.encoding = NSUTF8StringEncoding;
-    // we should set margin at client side instead
-    hints.margin = [NSNumber numberWithInt: 0];
-    ZXMultiFormatWriter *writer = [ZXMultiFormatWriter writer];
-    UIColor *onUIColor = [UIColor colorWithWhite:0.0 alpha:1.0];
-    UIColor *offUIColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     
-    ZXBitMatrix *bitMatrix = [writer encode:_text format:_barCodeFormat width:_width height:_height hints:hints error:&zebraError];
-    ZXImage *zebraImage = [ZXImage imageWithMatrix:bitMatrix onColor:onUIColor.CGColor offColor:offUIColor.CGColor];
-    UIImage *image = [UIImage imageWithCGImage:zebraImage.cgimage];
+    UIImage *image = nil;
+    NSString *filePath = nil;
+    
+    if(_cache){
+        filePath = [self generateFilePath:_text withFormat:_format withWidth:_width withHeight:_height];
+        if([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+            image = [UIImage imageWithContentsOfFile:filePath];
+        }
+    }
+    
+    if(image == nil){
+        
+        NSError *zebraError = nil;
+        ZXEncodeHints *hints = [ZXEncodeHints hints];
+        hints.encoding = NSUTF8StringEncoding;
+        // we should set margin at client side instead
+        hints.margin = [NSNumber numberWithInt: 0];
+        ZXMultiFormatWriter *writer = [ZXMultiFormatWriter writer];
+        UIColor *onUIColor = [UIColor colorWithWhite:0.0 alpha:1.0];
+        UIColor *offUIColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+        
+        ZXBitMatrix *bitMatrix = [writer encode:_text format:_barCodeFormat width:_width height:_height hints:hints error:&zebraError];
+        ZXImage *zebraImage = [ZXImage imageWithMatrix:bitMatrix onColor:onUIColor.CGColor offColor:offUIColor.CGColor];
+        image = [UIImage imageWithCGImage:zebraImage.cgimage];
+        
+        if(_cache) {
+            NSLog(@"filePath : %@", filePath);
+            NSData *imageData = UIImagePNGRepresentation(image);
+            [imageData writeToFile:filePath atomically:YES];
+        }        
+    }
     
     _image = [[UIImageView alloc] init];
     [_image setImage:image];
     _image.frame = self.bounds;
-    
     [self insertSubview:_image atIndex:0];
 }
 @end

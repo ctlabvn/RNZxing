@@ -8,7 +8,6 @@
 
 @property (nonatomic, assign) int width;
 @property (nonatomic, assign) int height;
-//@property int *width;
-//@property int *height;
+@property (nonatomic, assign) bool cache;
 
 @end
