@@ -87,6 +87,8 @@
     NSError *zebraError = nil;
     ZXEncodeHints *hints = [ZXEncodeHints hints];
     hints.encoding = NSUTF8StringEncoding;
+    // we should set margin at client side instead
+    hints.margin = [NSNumber numberWithInt: 0];
     ZXMultiFormatWriter *writer = [ZXMultiFormatWriter writer];
     UIColor *onUIColor = [UIColor colorWithWhite:0.0 alpha:1.0];
     UIColor *offUIColor = [UIColor colorWithWhite:1.0 alpha:1.0];
