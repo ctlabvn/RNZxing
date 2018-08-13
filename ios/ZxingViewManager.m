@@ -1,7 +1,7 @@
-#import "Zxing.h"
 #import "ZxingView.h"
+#import "ZxingViewManager.h"
 
-@implementation Zxing
+@implementation ZxingViewManager
 
 RCT_EXPORT_MODULE()
 
@@ -16,3 +16,4 @@ RCT_EXPORT_VIEW_PROPERTY(width, int);
 RCT_EXPORT_VIEW_PROPERTY(height, int);
 
 @end
+

@@ -8,9 +8,6 @@
     ZXBarcodeFormat _barCodeFormat;
     NSDictionary *_supportedBarCodeFormats;
     
-//    NSString *_text;
-//    int *_width;
-//    int *_height;
 }
 
 @synthesize text=_text,width=_width,height=_height;

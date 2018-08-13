@@ -28,12 +28,12 @@ type Props = {
   format: Format
 };
 
-class Zxing extends Component {
+class ZxingView extends Component {
   render() {
     return <RNZxing {...this.props} />;
   }
 }
 
-const RNZxing = requireNativeComponent('Zxing', Zxing);
+const RNZxing = requireNativeComponent('ZxingView', ZxingView);
 
-module.exports = Zxing;
+export default ZxingView;
