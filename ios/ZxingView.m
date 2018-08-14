@@ -36,7 +36,7 @@
                                      @"UPC_E": [NSNumber numberWithUnsignedInteger:kBarcodeFormatUPCE],
                                      @"UPC_EAN_EXTENSION": [NSNumber numberWithUnsignedInteger:kBarcodeFormatUPCEANExtension]
                                      };
-
+        
     }
     
     self.width = 200;
@@ -86,17 +86,17 @@
 }
 
 - (NSString *)generateFilePath:(NSString *)text withFormat:(NSString *)format
-                  withWidth:(int)width
-                     withHeight:(int)height
+                     withWidth:(int)width
+                    withHeight:(int)height
 {
-    NSData *plainData = [text dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *fileName = [NSString stringWithFormat:@"tmp/Zxing_%@_%@_%u_%u.png",
-                          [plainData base64EncodedStringWithOptions:kNilOptions], format,
+    NSString *plainData = [text stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *fileName = [NSString stringWithFormat:@"Zxing_%@_%@_%u_%u.png",
+                          plainData, format,
                           width, height];
-    
-    return [NSHomeDirectory() stringByAppendingPathComponent:fileName];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:fileName];
 }
-
 
 
 // put cache here as an option so that we can render faster, and can access cache path
@@ -110,6 +110,7 @@
     
     if(_cache){
         filePath = [self generateFilePath:_text withFormat:_format withWidth:_width withHeight:_height];
+        NSLog(@"filePath : %@", filePath);
         if([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             image = [UIImage imageWithContentsOfFile:filePath];
         }
@@ -131,10 +132,9 @@
         image = [UIImage imageWithCGImage:zebraImage.cgimage];
         
         if(_cache) {
-            NSLog(@"filePath : %@", filePath);
             NSData *imageData = UIImagePNGRepresentation(image);
             [imageData writeToFile:filePath atomically:YES];
-        }        
+        }
     }
     
     _image = [[UIImageView alloc] init];
