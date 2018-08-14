@@ -29,8 +29,8 @@ public class ZxingViewManager extends SimpleViewManager<ImageView> {
 
     private String text;
     private String format;
-    private float width = 200;
-    private float height = 200;
+    private int width = 200;
+    private int height = 200;
     private boolean cache = false;
 
     private Context mApplicationContext;
@@ -122,14 +122,14 @@ public class ZxingViewManager extends SimpleViewManager<ImageView> {
         }
 
         if(bitmap == null) {
-            Map<EncodeHintType, Object> hints = null;
-            String encoding = guessAppropriateEncoding(contentsToEncode);
-            if (encoding != null) {
-                hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
-                hints.put(EncodeHintType.CHARACTER_SET, encoding);
-                // we set margin at client side
-                hints.put(EncodeHintType.MARGIN, 0);
-            }
+//            Map<EncodeHintType, Object> hints = null;
+//            String encoding = guessAppropriateEncoding(contentsToEncode);
+//            if (encoding != null) {
+            Map<EncodeHintType, Object> hints =  hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            // we set margin at client side
+            hints.put(EncodeHintType.MARGIN, 0);
+//            }
             MultiFormatWriter writer = new MultiFormatWriter();
             BitMatrix result;
             try {
@@ -182,13 +182,13 @@ public class ZxingViewManager extends SimpleViewManager<ImageView> {
         return bitmap;
     }
 
-    private static String guessAppropriateEncoding(CharSequence contents) {
-        // Very crude at the moment
-        for (int i = 0; i < contents.length(); i++) {
-            if (contents.charAt(i) > 0xFF) {
-                return "UTF-8";
-            }
-        }
-        return null;
-    }
+//    private static String guessAppropriateEncoding(CharSequence contents) {
+//        // Very crude at the moment
+//        for (int i = 0; i < contents.length(); i++) {
+//            if (contents.charAt(i) > 0xFF) {
+//                return "UTF-8";
+//            }
+//        }
+//        return null;
+//    }
 }
